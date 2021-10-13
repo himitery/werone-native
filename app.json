@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "werone-native",
-    "slug": "werone-native",
-    "version": "1.0.0",
+    "name": "we are one",
+    "slug": "werone",
+    "owner": "werone",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {

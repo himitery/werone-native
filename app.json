@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "we are one",
+    "name": "위아원",
     "slug": "werone",
     "owner": "werone",
     "version": "0.0.1",
@@ -24,7 +24,9 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.werone.native",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"

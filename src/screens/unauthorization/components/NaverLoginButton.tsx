@@ -11,11 +11,13 @@ const NaverLoginButton: React.VFC = () => {
       onPress={handleOnPress}
       activeOpacity={1}
     >
-      <Image
-        style={styles.image}
-        source={require('../images/naver-icon.png')}
-        resizeMode={'contain'}
-      />
+      <View style={styles.imageContainer}>
+        <Image
+          style={styles.image}
+          source={require('../images/naver-icon.png')}
+          resizeMode={'contain'}
+        />
+      </View>
       <View style={styles.textContainer}>
         <Text style={styles.text}>네이버 아이디로 로그인</Text>
       </View>
@@ -31,6 +33,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     backgroundColor: Colors.NAVER,
+  },
+  imageContainer: {
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 6,
   },
   image: {
     width: 46,

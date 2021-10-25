@@ -1,6 +1,7 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { StackNavigationOptions } from '@react-navigation/stack';
+import SafeView from '@components/common/SafeView';
 
 export const HomeScreenOptions: StackNavigationOptions = {
   headerLeft: () => <></>,
@@ -8,9 +9,9 @@ export const HomeScreenOptions: StackNavigationOptions = {
 
 const HomeScreen: React.VFC = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeView style={styles.container}>
       <Text>Home Screen</Text>
-    </SafeAreaView>
+    </SafeView>
   );
 };
 

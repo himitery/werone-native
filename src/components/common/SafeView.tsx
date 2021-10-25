@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ViewStyle,
 } from 'react-native';
+import { LightTheme } from '@constants/color';
 
 interface SafeViewProps {
   children: React.ReactNode;
@@ -34,6 +35,7 @@ const SafeView: React.FC<SafeViewProps> = ({ children, style }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: LightTheme.BACK_GROUND,
   },
 });
 

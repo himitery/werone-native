@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Conditional from '@hocs/Conditional';
 import { LightTheme } from '@constants/color';
+import isKeyboardVisible from '@hooks/isKeyboardVisible';
 
 interface CustomButtonProps {
   text: string;
@@ -23,6 +24,7 @@ interface CustomButtonProps {
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   iconStyle?: StyleProp<ImageStyle>;
+  hideOnKeyboard?: boolean;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -33,25 +35,30 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   buttonStyle,
   textStyle,
   iconStyle,
+  hideOnKeyboard = false,
 }) => {
+  const keyboardVisible = isKeyboardVisible();
+
   return (
-    <TouchableOpacity
-      style={[styles.container, buttonStyle]}
-      onPress={onPress}
-      activeOpacity={0.9}
-    >
-      <Conditional condition={true}>
-        <Image
-          style={[styles.icon, iconStyle]}
-          source={iconSource}
-          width={20}
-          height={20}
-          resizeMode={'contain'}
-          {...iconProps}
-        />
-      </Conditional>
-      <Text style={[styles.text, textStyle]}>{text}</Text>
-    </TouchableOpacity>
+    <Conditional condition={!hideOnKeyboard || !keyboardVisible}>
+      <TouchableOpacity
+        style={[styles.container, buttonStyle]}
+        onPress={onPress}
+        activeOpacity={0.9}
+      >
+        <Conditional condition={true}>
+          <Image
+            style={[styles.icon, iconStyle]}
+            source={iconSource}
+            width={20}
+            height={20}
+            resizeMode={'contain'}
+            {...iconProps}
+          />
+        </Conditional>
+        <Text style={[styles.text, textStyle]}>{text}</Text>
+      </TouchableOpacity>
+    </Conditional>
   );
 };
 

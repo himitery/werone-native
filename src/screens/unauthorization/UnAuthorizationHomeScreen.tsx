@@ -1,10 +1,11 @@
 import React from 'react';
-import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { StackNavigationOptions } from '@react-navigation/stack';
 
 import { LightTheme } from '@constants/color';
 import KakaoLoginButton from '@screens/unauthorization/components/KakaoLoginButton';
 import NaverLoginButton from '@screens/unauthorization/components/NaverLoginButton';
+import SafeView from '@components/common/SafeView';
 
 export const UnAuthorizationHomeScreenOptions: StackNavigationOptions = {
   headerShown: false,
@@ -12,7 +13,7 @@ export const UnAuthorizationHomeScreenOptions: StackNavigationOptions = {
 
 const UnAuthorizationHomeScreen: React.VFC = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeView style={styles.container}>
       <View style={styles.topContainer}>
         <Text style={styles.title}>위아원</Text>
       </View>
@@ -29,13 +30,12 @@ const UnAuthorizationHomeScreen: React.VFC = () => {
           <NaverLoginButton />
         </View>
       </View>
-    </SafeAreaView>
+    </SafeView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: LightTheme.BACK_GROUND,
   },
   topContainer: {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { StackNavigationOptions } from '@react-navigation/stack';
+
 import { LightTheme } from '@constants/color';
 import KakaoLoginButton from '@screens/unauthorization/components/KakaoLoginButton';
 import NaverLoginButton from '@screens/unauthorization/components/NaverLoginButton';
@@ -35,8 +36,6 @@ const UnAuthorizationHomeScreen: React.VFC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    paddingHorizontal: 12,
     backgroundColor: LightTheme.BACK_GROUND,
   },
   topContainer: {
@@ -47,6 +46,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     height: 124,
     bottom: 50,
+    paddingHorizontal: 12,
     justifyContent: 'space-between',
     backgroundColor: LightTheme.BACK_GROUND,
   },

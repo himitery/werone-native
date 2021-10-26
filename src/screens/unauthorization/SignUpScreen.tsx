@@ -28,6 +28,7 @@ import { UnAuthorizationNavigations } from '@constants/navigations';
 export const SignUpScreenOptions: StackNavigationOptions = {
   gestureEnabled: false,
 };
+
 type routeProp = RouteProp<
   UnAuthorizationStackParamList,
   UnAuthorizationNavigations.SignUp

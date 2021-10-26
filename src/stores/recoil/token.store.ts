@@ -1,13 +1,13 @@
 import { atom, selector } from 'recoil';
-import { TokenProps } from '@stores/repositories/TokenRepository';
+import { Token } from '@stores/repositories/TokenRepository';
 import RepositoryKeys from '@constants/respositories';
 
-const tokenAtom = atom<TokenProps>({
+const tokenAtom = atom<Token>({
   key: `${RepositoryKeys.TOKEN}-atom`,
   default: null,
 });
 
-const tokenSelector = selector<TokenProps>({
+const tokenSelector = selector<Token>({
   key: `${RepositoryKeys.TOKEN}-selector`,
   get: ({ get }) => get(tokenAtom),
   set: ({ set }, newValue) => {

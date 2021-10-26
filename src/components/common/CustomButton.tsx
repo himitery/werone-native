@@ -25,6 +25,7 @@ interface CustomButtonProps {
   textStyle?: StyleProp<TextStyle>;
   iconStyle?: StyleProp<ImageStyle>;
   hideOnKeyboard?: boolean;
+  disabled?: boolean;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -36,6 +37,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   textStyle,
   iconStyle,
   hideOnKeyboard = false,
+  disabled = false,
 }) => {
   const keyboardVisible = isKeyboardVisible();
 
@@ -45,6 +47,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
         style={[styles.container, buttonStyle]}
         onPress={onPress}
         activeOpacity={0.9}
+        disabled={disabled}
       >
         <Conditional condition={true}>
           <Image

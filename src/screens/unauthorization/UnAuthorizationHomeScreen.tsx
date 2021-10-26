@@ -7,9 +7,7 @@ import KakaoLoginButton from '@screens/unauthorization/components/KakaoLoginButt
 import NaverLoginButton from '@screens/unauthorization/components/NaverLoginButton';
 import SafeView from '@components/common/SafeView';
 
-export const UnAuthorizationHomeScreenOptions: StackNavigationOptions = {
-  headerShown: false,
-};
+export const UnAuthorizationHomeScreenOptions: StackNavigationOptions = {};
 
 const UnAuthorizationHomeScreen: React.VFC = () => {
   return (

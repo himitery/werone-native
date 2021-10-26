@@ -1,8 +1,20 @@
 import React, { useCallback } from 'react';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { UnAuthorizationStackParamList } from '@navigations/stack/UnAuthorizationStackNavigator';
+import { UnAuthorizationNavigations } from '@constants/navigations';
+
+type navigationProp = NavigationProp<
+  UnAuthorizationStackParamList,
+  UnAuthorizationNavigations.Home
+>;
 
 const KakaoLoginButton: React.VFC = () => {
-  const handleOnPress = useCallback(() => {}, []);
+  const navigation = useNavigation<navigationProp>();
+
+  const handleOnPress = useCallback(() => {
+    navigation.navigate(UnAuthorizationNavigations.Kakao);
+  }, [navigation]);
 
   return (
     <TouchableOpacity

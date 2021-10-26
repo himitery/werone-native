@@ -1,5 +1,8 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackNavigationOptions,
+} from '@react-navigation/stack';
 
 import { UnAuthorizationNavigations } from '@constants/navigations';
 import UnAuthorizationHomeScreen, {
@@ -8,10 +11,19 @@ import UnAuthorizationHomeScreen, {
 import SignUpScreen, {
   SignUpScreenOptions,
 } from '@screens/unauthorization/SignUpScreen';
+import KakaoLoginScreen, {
+  KakaoLoginScreenOptions,
+} from '@screens/unauthorization/KakaoLoginScreen';
+import PlatformType from '@api/domain/platformType';
 
 export type UnAuthorizationStackParamList = {
   [UnAuthorizationNavigations.Home]: undefined;
-  [UnAuthorizationNavigations.SignUp]: undefined;
+  [UnAuthorizationNavigations.SignUp]: {
+    email?: string;
+    platformId: string;
+    platformType: PlatformType;
+    profileImageUrl?: string;
+  };
   [UnAuthorizationNavigations.Kakao]: undefined;
   [UnAuthorizationNavigations.Naver]: undefined;
 };
@@ -20,7 +32,7 @@ const Stack = createStackNavigator<UnAuthorizationStackParamList>();
 
 const UnAuthorizationStackNavigator: React.VFC = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen
         name={UnAuthorizationNavigations.Home}
         component={UnAuthorizationHomeScreen}
@@ -31,8 +43,17 @@ const UnAuthorizationStackNavigator: React.VFC = () => {
         component={SignUpScreen}
         options={SignUpScreenOptions}
       />
+      <Stack.Screen
+        name={UnAuthorizationNavigations.Kakao}
+        component={KakaoLoginScreen}
+        options={KakaoLoginScreenOptions}
+      />
     </Stack.Navigator>
   );
+};
+
+const screenOptions: StackNavigationOptions = {
+  headerShown: false,
 };
 
 export default UnAuthorizationStackNavigator;

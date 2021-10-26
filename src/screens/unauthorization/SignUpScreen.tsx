@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   BackHandler,
   Platform,
@@ -17,16 +17,21 @@ import CustomButton from '@components/common/CustomButton';
 import { Colors } from '@constants/color';
 import {
   NavigationProp,
+  RouteProp,
   useFocusEffect,
   useNavigation,
+  useRoute,
 } from '@react-navigation/native';
 import { UnAuthorizationStackParamList } from '@navigations/stack/UnAuthorizationStackNavigator';
 import { UnAuthorizationNavigations } from '@constants/navigations';
 
 export const SignUpScreenOptions: StackNavigationOptions = {
-  headerShown: false,
   gestureEnabled: false,
 };
+type routeProp = RouteProp<
+  UnAuthorizationStackParamList,
+  UnAuthorizationNavigations.SignUp
+>;
 
 type navigationProp = NavigationProp<
   UnAuthorizationStackParamList,
@@ -34,15 +39,22 @@ type navigationProp = NavigationProp<
 >;
 
 const SignUpScreen: React.VFC = () => {
+  const {
+    params: { email: mail, platformId, platformType, profileImageUrl },
+  } = useRoute<routeProp>();
   const navigation = useNavigation<navigationProp>();
 
   const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [image, setImage] = useState<string>('');
+  const [email, setEmail] = useState<string>(mail);
+  const [image, setImage] = useState<string>();
+  const [buttonStatus, setButtonStatus] = useState<boolean>(false);
 
   useFocusEffect(
     useCallback(() => {
-      const hardwareBackPress = () => true;
+      const hardwareBackPress = () => {
+        navigation.navigate(UnAuthorizationNavigations.Home);
+        return true;
+      };
 
       BackHandler.addEventListener('hardwareBackPress', hardwareBackPress);
       return () => {
@@ -51,7 +63,16 @@ const SignUpScreen: React.VFC = () => {
     }, [])
   );
 
-  const handleSignUp = useCallback(() => {}, []);
+  useEffect(() => {
+    setButtonStatus(!!name && !!email);
+  }, [name, email]);
+
+  const handleSignUp = useCallback(() => {}, [
+    name,
+    email,
+    platformId,
+    platformType,
+  ]);
 
   return (
     <SafeView>
@@ -65,12 +86,14 @@ const SignUpScreen: React.VFC = () => {
             value={name}
             setValue={setName}
             style={styles.textInputContainer}
+            props={{ returnKeyType: 'next' }}
           />
           <CustomTextInput
             title={'이메일'}
             value={email}
             setValue={setEmail}
             style={styles.textInputContainer}
+            editable={!mail}
           />
           <RegisterStudentIdCard setImage={setImage} />
         </ScrollView>
@@ -80,6 +103,7 @@ const SignUpScreen: React.VFC = () => {
           buttonStyle={styles.signUpButtonContainer}
           textStyle={styles.signUpButtonText}
           hideOnKeyboard={true}
+          disabled={!buttonStatus}
         />
       </View>
     </SafeView>

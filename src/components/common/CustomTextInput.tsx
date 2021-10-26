@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TextInputProps,
   View,
   ViewStyle,
 } from 'react-native';
@@ -13,16 +14,20 @@ interface CustomTextInputProps {
   title: string;
   placeholder?: string;
   value: string;
+  editable?: boolean;
   setValue: React.Dispatch<React.SetStateAction<string>>;
   style?: StyleProp<ViewStyle>;
+  props?: TextInputProps;
 }
 
 const CustomTextInput: React.FC<CustomTextInputProps> = ({
   title,
   placeholder,
   value,
+  editable = true,
   setValue,
   style,
+  props,
 }) => {
   const handleChangeText = useCallback((text: string) => {
     setValue(text);
@@ -38,6 +43,8 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
         placeholder={placeholder}
         selectionColor={LightTheme.MAIN}
         numberOfLines={1}
+        editable={editable}
+        {...props}
       />
     </View>
   );

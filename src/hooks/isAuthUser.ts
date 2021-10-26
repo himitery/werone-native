@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
-import { TokenProps } from '@stores/repositories/TokenRepository';
+import { Token } from '@stores/repositories/TokenRepository';
 import tokenSelector from '@stores/recoil/token.store';
+import meApi from '@api/user/me.api';
+import instance from '@config/axios';
 
 /* Todo
  * 1. Token Repository에 Token 존재 여부 확인
@@ -12,14 +14,26 @@ import tokenSelector from '@stores/recoil/token.store';
  *   2-2. 토큰이 조작된 경우, value = false
  * */
 const isAuthUser = (): boolean => {
-  const [token, setToken] = useRecoilState<TokenProps>(tokenSelector);
+  const { data, mutate } = meApi();
+
+  const [token, setToken] = useRecoilState<Token>(tokenSelector);
   const [value, setValue] = useState<boolean>(false);
 
   useEffect(() => {
     if (token) {
-      setValue(true);
+      instance.defaults.headers.common['authorization'] = token.accessToken;
+      mutate();
     }
   }, [token]);
+
+  useEffect(() => {
+    if (data === undefined) return;
+    else if (data?.data === null) {
+      setValue(false);
+    } else if (data?.status === 200) {
+      setValue(true);
+    }
+  }, [data]);
 
   return value;
 };

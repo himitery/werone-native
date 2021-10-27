@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   BackHandler,
+  Image,
   Platform,
   ScrollView,
   StatusBar,
@@ -9,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import { StackNavigationOptions } from '@react-navigation/stack';
+import * as FileSystem from 'expo-file-system';
 
 import SafeView from '@components/common/SafeView';
 import CustomTextInput from '@components/common/CustomTextInput';
@@ -24,6 +26,8 @@ import {
 } from '@react-navigation/native';
 import { UnAuthorizationStackParamList } from '@navigations/stack/UnAuthorizationStackNavigator';
 import { UnAuthorizationNavigations } from '@constants/navigations';
+import signUpApi from '@api/auth/sign-up.api';
+import TokenRepository from '@stores/repositories/TokenRepository';
 
 export const SignUpScreenOptions: StackNavigationOptions = {
   gestureEnabled: false,
@@ -65,15 +69,31 @@ const SignUpScreen: React.VFC = () => {
   );
 
   useEffect(() => {
-    setButtonStatus(!!name && !!email);
-  }, [name, email]);
+    setButtonStatus(!!name && !!email && !!image);
+  }, [name, email, image]);
 
-  const handleSignUp = useCallback(() => {}, [
-    name,
-    email,
-    platformId,
-    platformType,
-  ]);
+  const handleSignUp = useCallback(async () => {
+    try {
+      const idCardImage = await FileSystem.readAsStringAsync(image, {
+        encoding: 'base64',
+      });
+
+      const { token } = await signUpApi({
+        name,
+        email,
+        idCardImage,
+        platformId,
+        platformType,
+        profileImageUrl,
+      });
+
+      TokenRepository.set(token);
+    } catch (e) {
+      console.group(`[SignUp Error]`);
+      console.log(e);
+      console.groupEnd();
+    }
+  }, [name, email, image, platformId, platformType, profileImageUrl]);
 
   return (
     <SafeView>
@@ -97,6 +117,7 @@ const SignUpScreen: React.VFC = () => {
             editable={!mail}
           />
           <RegisterStudentIdCard setImage={setImage} />
+          <Image style={styles.image} source={{ uri: image, height: 180 }} />
         </ScrollView>
         <CustomButton
           text={'가입하기'}
@@ -130,6 +151,10 @@ const styles = StyleSheet.create({
   },
   textInputContainer: {
     marginBottom: 28,
+  },
+  image: {
+    borderRadius: 12,
+    marginTop: 24,
   },
   signUpButtonContainer: {
     position: 'absolute',

@@ -32,7 +32,10 @@ const Stack = createStackNavigator<UnAuthorizationStackParamList>();
 
 const UnAuthorizationStackNavigator: React.VFC = () => {
   return (
-    <Stack.Navigator screenOptions={screenOptions}>
+    <Stack.Navigator
+      initialRouteName={UnAuthorizationNavigations.Home}
+      screenOptions={screenOptions}
+    >
       <Stack.Screen
         name={UnAuthorizationNavigations.Home}
         component={UnAuthorizationHomeScreen}

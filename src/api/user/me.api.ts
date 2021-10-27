@@ -9,20 +9,16 @@ interface MeApiData {
 }
 
 const meApi = () => {
-  return useSWR<MeApiData>('/user/me', fetcher);
+  return useSWR<MeApiData>(
+    !!instance.defaults.headers.common?.['Authorization'] ? '/user/me' : null,
+    fetcher
+  );
 };
 
 const fetcher = async (url: string) => {
-  return await instance
-    .get(url)
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      console.group(`[Me Api Error]`);
-      console.log(err);
-      console.groupEnd();
-    });
+  return await instance.get(url).then((res) => {
+    return res.data;
+  });
 };
 
 export default meApi;

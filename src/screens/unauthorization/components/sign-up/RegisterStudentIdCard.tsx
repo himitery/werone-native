@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+
 import CustomButton from '@components/common/CustomButton';
 import { Colors, LightTheme } from '@constants/color';
 
@@ -10,7 +12,24 @@ interface RegisterStudentIdCardProps {
 const RegisterStudentIdCard: React.FC<RegisterStudentIdCardProps> = ({
   setImage,
 }) => {
-  const handleOnPress = useCallback(() => {}, []);
+  const handleOnPress = useCallback(async () => {
+    if (Platform.OS === 'web') return;
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      return;
+    }
+
+    const result: ImagePicker.ImagePickerResult =
+      await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        quality: 1,
+      });
+
+    if (!result.cancelled) {
+      setImage(result['uri']);
+    }
+  }, []);
 
   return (
     <View style={styles.container}>

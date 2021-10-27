@@ -30,6 +30,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "\"위아원\"이 사진 또는 동영상을 사용하여 학생증 인증, 게시물, 프로필사진 등의 기능 사용을 위해 사진 라이브러리에 접근하도록 허용합니다."
+        }
+      ]
+    ]
   }
 }

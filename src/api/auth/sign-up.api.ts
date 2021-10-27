@@ -1,36 +1,26 @@
-import Gender from '@api/domain/gender';
 import PlatformType from '@api/domain/platformType';
-import { useSetRecoilState } from 'recoil';
 import { Token } from '@stores/repositories/TokenRepository';
-import tokenSelector from '@stores/recoil/token.store';
 import instance from '@config/axios';
+import User from '@api/domain/user';
 
 interface SignUpApiProps {
-  authority: string;
-  birth: Date;
-  email: string;
-  gender: Gender;
   name: string;
+  email: string;
+  idCardImage: string;
   platformId: string;
   platformType: PlatformType;
   profileImageUrl?: string;
 }
 
-const signUpApi = async (props: SignUpApiProps) => {
-  const tokenStore = useSetRecoilState<Token>(tokenSelector);
+interface SignUpApiData {
+  token: Token;
+  user: User;
+}
 
-  const { data } = await instance.post(`/auth/signup`, props).then((res) => {
-    const { accessToken, refreshToken } = res.data.token;
-
-    tokenStore({ accessToken, refreshToken } as Token);
-    instance.defaults.headers.common['authorization'] = accessToken;
-
+const signUpApi = async (props: SignUpApiProps): Promise<SignUpApiData> => {
+  return await instance.post(`/auth/signup`, props).then((res) => {
     return res.data;
   });
-
-  return {
-    data,
-  };
 };
 
 export default signUpApi;

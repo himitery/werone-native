@@ -10,20 +10,20 @@ interface KakaoLoginApiProps {
 interface KakaoLoginApiData {
   isUser: boolean;
   oauth: {
-    email: string;
+    email?: string;
     nickName: string;
     platformId: string;
     platformType: PlatformType;
     profileImageUrl: string;
   };
-  token: Token;
-  user: User;
+  token?: Token;
+  user?: User;
 }
 
 const kakaoLoginApi = async (
   props: KakaoLoginApiProps
-): Promise<{ data: KakaoLoginApiData }> => {
-  const { data } = await instance
+): Promise<KakaoLoginApiData> => {
+  return await instance
     .post(`/auth/kakao`, props)
     .then((res) => {
       return res.data;
@@ -33,10 +33,6 @@ const kakaoLoginApi = async (
       console.error(err);
       console.groupEnd();
     });
-
-  return {
-    data,
-  };
 };
 
 export default kakaoLoginApi;

@@ -16,8 +16,8 @@ const isKeyboardVisible = (): boolean => {
     Keyboard.addListener('keyboardDidHide', keyboardDidHide);
 
     return () => {
-      Keyboard.removeListener('keyboardDidShow', keyboardDidShow);
-      Keyboard.removeListener('keyboardDidHide', keyboardDidHide);
+      Keyboard.removeAllListeners('keyboardDidShow');
+      Keyboard.removeAllListeners('keyboardDidHide');
     };
   }, []);
 

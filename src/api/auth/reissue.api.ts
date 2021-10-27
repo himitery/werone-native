@@ -1,25 +1,20 @@
-import axios from 'axios';
 import TokenRepository, { Token } from '@stores/repositories/TokenRepository';
 import instance from '@config/axios';
-import { useSetRecoilState } from 'recoil';
-import tokenSelector from '@stores/recoil/token.store';
+import { mutate } from 'swr';
 
-const reissueApi = async () => {
-  const tokenStore = useSetRecoilState<Token>(tokenSelector);
+interface ReissueApiProps {
+  refreshToken: string;
+}
 
-  const { accessToken, refreshToken } = await TokenRepository.get();
-
-  const { data } = await axios
-    .post('/auth/reissue', {
-      accessToken,
-      refreshToken,
-    })
+const reissueApi = async (props: ReissueApiProps): Promise<Token> => {
+  return await instance
+    .post('/auth/token', props)
     .then((res) => {
-      const { accessToken, refreshToken } = res.data.token;
-
-      tokenStore({ accessToken, refreshToken } as Token);
-      instance.defaults.headers.common['authorization'] = accessToken;
-
+      TokenRepository.set(res.data);
+      instance.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${res.data.accessToken}`;
+      mutate('/user/me');
       return res.data;
     })
     .catch((err) => {
@@ -27,8 +22,6 @@ const reissueApi = async () => {
       console.log(err);
       console.groupEnd();
     });
-
-  return data;
 };
 
 export default reissueApi;

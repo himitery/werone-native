@@ -9,10 +9,7 @@ import kakaoLoginApi from '@api/auth/kakao/kakao-login.api';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { UnAuthorizationStackParamList } from '@navigations/stack/UnAuthorizationStackNavigator';
 import { UnAuthorizationNavigations } from '@constants/navigations';
-import instance from '@config/axios';
-import { useSetRecoilState } from 'recoil';
-import { Token } from '@stores/repositories/TokenRepository';
-import tokenSelector from '@stores/recoil/token.store';
+import TokenRepository from '@stores/repositories/TokenRepository';
 import PlatformType from '@api/domain/platformType';
 
 export const KakaoLoginScreenOptions: StackNavigationOptions = {};
@@ -27,21 +24,14 @@ const injectedJavaScript = `window.ReactNativeWebView.postMessage("");`;
 const KakaoLoginScreen: React.VFC = () => {
   const navigation = useNavigation<navigationProp>();
 
-  const tokenStore = useSetRecoilState<Token>(tokenSelector);
-
   const handleOnMessage = useCallback((e: WebViewMessageEvent) => {
     const url = e.nativeEvent['url'];
     if (url.includes(`${KAKAO_REDIRECT_URL}?code=`)) {
       kakaoLoginApi({
         code: url.replace(`${KAKAO_REDIRECT_URL}?code=`, ''),
-      }).then(({ data }) => {
+      }).then((data) => {
         if (data?.isUser) {
-          tokenStore({
-            accessToken: data.token.accessToken,
-            refreshToken: data.token.refreshToken,
-          });
-          instance.defaults.headers.common['authorization'] =
-            data?.token.accessToken;
+          TokenRepository.set(data.token);
         } else {
           navigation.navigate(UnAuthorizationNavigations.SignUp, {
             email: data.oauth.email,

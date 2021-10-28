@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { StackNavigationOptions } from '@react-navigation/stack';
 import * as FileSystem from 'expo-file-system';
+import { useSetRecoilState } from 'recoil';
 
 import SafeView from '@components/common/SafeView';
 import CustomTextInput from '@components/common/CustomTextInput';
@@ -27,9 +28,8 @@ import {
 import { UnAuthorizationStackParamList } from '@navigations/stack/UnAuthorizationStackNavigator';
 import { UnAuthorizationNavigations } from '@constants/navigations';
 import signUpApi from '@api/auth/sign-up.api';
-import TokenRepository from '@stores/repositories/TokenRepository';
-import { mutate } from 'swr';
-import instance from '@config/axios';
+import { Token } from '@stores/repositories/TokenRepository';
+import tokenSelector from '@stores/recoil/token.store';
 
 export const SignUpScreenOptions: StackNavigationOptions = {
   gestureEnabled: false,
@@ -50,6 +50,7 @@ const SignUpScreen: React.VFC = () => {
     params: { email: mail, platformId, platformType, profileImageUrl },
   } = useRoute<routeProp>();
   const navigation = useNavigation<navigationProp>();
+  const setToken = useSetRecoilState<Token>(tokenSelector);
 
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>(mail);
@@ -89,11 +90,7 @@ const SignUpScreen: React.VFC = () => {
         profileImageUrl,
       });
 
-      TokenRepository.set(token);
-      instance.defaults.headers.common[
-        'Authorization'
-      ] = `Bearer ${token.accessToken}`;
-      mutate('/user/me');
+      setToken(token);
     } catch (err) {
       console.group(`[SignUp Error]`);
       console.log(err);

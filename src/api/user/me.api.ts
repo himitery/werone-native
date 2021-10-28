@@ -9,13 +9,20 @@ interface MeApiData {
 }
 
 const meApi = () => {
-  return useSWR<MeApiData>('/user/me', fetcher);
+  return useSWR<MeApiData>('/user/me', meApiFetcher);
 };
 
-const fetcher = async (url: string) => {
-  return await instance.get(url).then((res) => {
-    return res.data;
-  });
+export const meApiFetcher = async (url = '/user/me'): Promise<MeApiData> => {
+  return await instance
+    .get(url)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.group(`[Me Api Fetcher Error]`);
+      console.log(err);
+      console.groupEnd();
+    });
 };
 
 export default meApi;

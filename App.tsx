@@ -26,6 +26,7 @@ const App: React.VFC = () => {
     Partial<ConfigOptions> & {
       provider?: (cache: Readonly<Cache>) => Cache;
     } = {
+    errorRetryCount: 3,
     onErrorRetry: async (err, key, config, revalidate, { retryCount }) => {
       const statusCode = +err
         .toString()
@@ -33,9 +34,18 @@ const App: React.VFC = () => {
         .split('status code ')[1];
       if (statusCode !== 401) return;
 
-      const token = await TokenRepository.get();
-      if (!token) return;
-      reissueApi({ url: key, refreshToken: token.refreshToken });
+      const existingToken = await TokenRepository.get();
+      if (!existingToken) return;
+
+      const incomingToken = await reissueApi({
+        url: key,
+        refreshToken: existingToken.refreshToken,
+      });
+      if (!incomingToken) return;
+      TokenRepository.set(incomingToken);
+      instance.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${incomingToken.accessToken}`;
 
       setTimeout(() => revalidate({ retryCount }), 1000);
     },

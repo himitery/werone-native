@@ -1,35 +1,48 @@
 import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 
 import TokenRepository, { Token } from '@stores/repositories/TokenRepository';
-import meApi from '@api/user/me.api';
+import tokenSelector from '@stores/recoil/token.store';
+import { meApiFetcher } from '@api/user/me.api';
 import instance from '@config/axios';
+import reissueApi from '@api/auth/reissue.api';
 
 const isAuthUser = (): boolean => {
-  const { data, mutate } = meApi();
-
-  const [token, setToken] = useState<Token>(null);
-  const [value, setValue] = useState<boolean>(false);
+  const [token, setToken] = useRecoilState<Token>(tokenSelector);
+  const [auth, setAuth] = useState<boolean>(false);
 
   useEffect(() => {
-    TokenRepository.get().then((res) => {
-      setToken(res);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!token) return;
-    setValue(true);
-    instance.defaults.headers.common[
-      'Authorization'
-    ] = `Bearer ${token.accessToken}`;
-    mutate();
+    if (!token) {
+      setAuth(false);
+      TokenRepository.get().then((res) => {
+        if (res) setToken(res);
+      });
+    } else {
+      instance.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${token.accessToken}`;
+      meApiFetcher().then((res) => {
+        if (!res) {
+          reissueApi({
+            url: '/user/me',
+            refreshToken: token.refreshToken,
+          }).then((res) => {
+            if (!res) {
+              setToken(null);
+              setAuth(false);
+            } else {
+              setToken(res);
+              setAuth(true);
+            }
+          });
+        } else {
+          setAuth(true);
+        }
+      });
+    }
   }, [token]);
 
-  useEffect(() => {
-    setValue(!!data);
-  }, [data]);
-
-  return value;
+  return auth;
 };
 
 export default isAuthUser;

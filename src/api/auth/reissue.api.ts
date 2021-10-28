@@ -3,18 +3,22 @@ import instance from '@config/axios';
 import { mutate } from 'swr';
 
 interface ReissueApiProps {
+  url: string;
   refreshToken: string;
 }
 
-const reissueApi = async (props: ReissueApiProps): Promise<Token> => {
+const reissueApi = async ({
+  url,
+  refreshToken,
+}: ReissueApiProps): Promise<Token> => {
   return await instance
-    .post('/auth/token', props)
+    .post('/auth/token', { refreshToken })
     .then((res) => {
       TokenRepository.set(res.data);
       instance.defaults.headers.common[
         'Authorization'
       ] = `Bearer ${res.data.accessToken}`;
-      mutate('/user/me');
+      mutate(url);
       return res.data;
     })
     .catch((err) => {

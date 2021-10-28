@@ -15,6 +15,7 @@ const App: React.VFC = () => {
 
   useEffect(() => {
     TokenRepository.get().then((token) => {
+      if (!token) return;
       instance.defaults.headers.common[
         'Authorization'
       ] = `Bearer ${token.accessToken}`;
@@ -32,9 +33,9 @@ const App: React.VFC = () => {
         .split('status code ')[1];
       if (statusCode !== 401) return;
 
-      TokenRepository.get().then(({ refreshToken }) => {
-        reissueApi({ refreshToken });
-      });
+      const token = await TokenRepository.get();
+      if (!token) return;
+      reissueApi({ url: key, refreshToken: token.refreshToken });
 
       setTimeout(() => revalidate({ retryCount }), 1000);
     },

@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import WebView, { WebViewMessageEvent } from 'react-native-webview';
+import { mutate } from 'swr';
 
 import SafeView from '@components/common/SafeView';
 import { KAKAO_API_URL, KAKAO_REDIRECT_URL } from '@/api';
@@ -11,6 +12,7 @@ import { UnAuthorizationStackParamList } from '@navigations/stack/UnAuthorizatio
 import { UnAuthorizationNavigations } from '@constants/navigations';
 import TokenRepository from '@stores/repositories/TokenRepository';
 import PlatformType from '@api/domain/platformType';
+import instance from '@config/axios';
 
 export const KakaoLoginScreenOptions: StackNavigationOptions = {};
 
@@ -32,6 +34,12 @@ const KakaoLoginScreen: React.VFC = () => {
       }).then((data) => {
         if (data?.isUser) {
           TokenRepository.set(data.token);
+          instance.defaults.headers.common[
+            'Authorization'
+          ] = `Bearer ${data.token.accessToken}`;
+          mutate('/user/me').then((res) => {
+            console.log(res);
+          });
         } else {
           navigation.navigate(UnAuthorizationNavigations.SignUp, {
             email: data.oauth.email,

@@ -28,6 +28,8 @@ import { UnAuthorizationStackParamList } from '@navigations/stack/UnAuthorizatio
 import { UnAuthorizationNavigations } from '@constants/navigations';
 import signUpApi from '@api/auth/sign-up.api';
 import TokenRepository from '@stores/repositories/TokenRepository';
+import { mutate } from 'swr';
+import instance from '@config/axios';
 
 export const SignUpScreenOptions: StackNavigationOptions = {
   gestureEnabled: false,
@@ -88,9 +90,13 @@ const SignUpScreen: React.VFC = () => {
       });
 
       TokenRepository.set(token);
-    } catch (e) {
+      instance.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${token.accessToken}`;
+      mutate('/user/me');
+    } catch (err) {
       console.group(`[SignUp Error]`);
-      console.log(e);
+      console.log(err);
       console.groupEnd();
     }
   }, [name, email, image, platformId, platformType, profileImageUrl]);

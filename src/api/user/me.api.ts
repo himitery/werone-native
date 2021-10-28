@@ -9,10 +9,7 @@ interface MeApiData {
 }
 
 const meApi = () => {
-  return useSWR<MeApiData>(
-    !!instance.defaults.headers.common?.['Authorization'] ? '/user/me' : null,
-    fetcher
-  );
+  return useSWR<MeApiData>('/user/me', fetcher);
 };
 
 const fetcher = async (url: string) => {

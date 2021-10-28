@@ -23,16 +23,9 @@ interface KakaoLoginApiData {
 const kakaoLoginApi = async (
   props: KakaoLoginApiProps
 ): Promise<KakaoLoginApiData> => {
-  return await instance
-    .post(`/auth/kakao`, props)
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      console.group(`[Kakao Login Api Error]`);
-      console.error(err);
-      console.groupEnd();
-    });
+  return await instance.post(`/auth/kakao`, props).then((res) => {
+    return res.data;
+  });
 };
 
 export default kakaoLoginApi;

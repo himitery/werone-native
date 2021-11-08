@@ -17,7 +17,7 @@ export const HomeScreenOptions: StackNavigationOptions = {
 
 const HomeScreen: React.VFC = () => {
   const [token] = useRecoilState<Token>(tokenSelector);
-  alert(token.accessToken);
+  // alert(token.accessToken);
   return (
     <SafeView>
       <ScrollView style={styles.container}>

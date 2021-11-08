@@ -14,7 +14,7 @@ import { useSetRecoilState } from 'recoil';
 
 import SafeView from '@components/common/SafeView';
 import CustomTextInput from '@components/common/CustomTextInput';
-import RegisterStudentIdCard from '@screens/unauthorization/components/sign-up/RegisterStudentIdCard';
+import RegisterStudentIdCard from '@screens/un-authorization/components/sign-up/RegisterStudentIdCard';
 import CustomButton from '@components/common/CustomButton';
 import { Colors } from '@constants/color';
 import {
@@ -24,7 +24,7 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import { UnAuthorizationStackParamList } from '@navigations/stack/UnAuthorizationStackNavigator';
+import { UnAuthorizationStackParamList } from '@navigations/stack/un-authorization/UnAuthorizationStackNavigator';
 import { UnAuthorizationNavigations } from '@constants/navigations';
 import signUpApi from '@api/auth/sign-up.api';
 import { Token } from '@stores/repositories/TokenRepository';

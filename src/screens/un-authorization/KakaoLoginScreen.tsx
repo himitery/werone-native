@@ -7,7 +7,7 @@ import { KAKAO_API_URL, KAKAO_REDIRECT_URL } from '@/api';
 import { StackNavigationOptions } from '@react-navigation/stack';
 import kakaoLoginApi from '@api/auth/kakao/kakao-login.api';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { UnAuthorizationStackParamList } from '@navigations/stack/UnAuthorizationStackNavigator';
+import { UnAuthorizationStackParamList } from '@navigations/stack/un-authorization/UnAuthorizationStackNavigator';
 import { UnAuthorizationNavigations } from '@constants/navigations';
 import { Token } from '@stores/repositories/TokenRepository';
 import PlatformType from '@api/domain/platformType';

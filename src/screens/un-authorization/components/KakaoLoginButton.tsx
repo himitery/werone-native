@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { UnAuthorizationStackParamList } from '@navigations/stack/UnAuthorizationStackNavigator';
+import { UnAuthorizationStackParamList } from '@navigations/stack/un-authorization/UnAuthorizationStackNavigator';
 import { UnAuthorizationNavigations } from '@constants/navigations';
 
 type navigationProp = NavigationProp<

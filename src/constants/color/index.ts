@@ -5,6 +5,7 @@ export enum LightTheme {
   INPUT_BACK_GROUND = '#E0E0E0',
   GENERAL_BUTTON_BACK_GROUND = '#606261',
   INACTIVE = '#656565',
+  BORDER = '#DBDBDB',
 }
 
 export enum Colors {
@@ -13,4 +14,6 @@ export enum Colors {
   NAVER_TEXT = '#FFFFFF',
   WHITE = '#FFFFFF',
   WARNNING = '#FF2626',
+  GRAY = '#ADADAD',
+  LIGHT_GRAY = '#DBDBDB',
 }

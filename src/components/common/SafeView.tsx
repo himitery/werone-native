@@ -10,7 +10,7 @@ import {
 import { LightTheme } from '@constants/color';
 
 interface SafeViewProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
 }
 

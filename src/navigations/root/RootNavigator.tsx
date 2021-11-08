@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/stack';
 
 import { RootNavigations } from '@constants/navigations';
-import UnAuthorizationStackNavigator from '@navigations/stack/UnAuthorizationStackNavigator';
+import UnAuthorizationStackNavigator from '@navigations/stack/un-authorization/UnAuthorizationStackNavigator';
 import MainBottomStackNavigator from '@navigations/tab/MainBottomStackNavigator';
 
 export type RootStackParamList = {

@@ -7,13 +7,13 @@ import {
 import { UnAuthorizationNavigations } from '@constants/navigations';
 import UnAuthorizationHomeScreen, {
   UnAuthorizationHomeScreenOptions,
-} from '@screens/unauthorization/UnAuthorizationHomeScreen';
+} from '@screens/un-authorization/UnAuthorizationHomeScreen';
 import SignUpScreen, {
   SignUpScreenOptions,
-} from '@screens/unauthorization/SignUpScreen';
+} from '@screens/un-authorization/SignUpScreen';
 import KakaoLoginScreen, {
   KakaoLoginScreenOptions,
-} from '@screens/unauthorization/KakaoLoginScreen';
+} from '@screens/un-authorization/KakaoLoginScreen';
 import PlatformType from '@api/domain/platformType';
 
 export type UnAuthorizationStackParamList = {

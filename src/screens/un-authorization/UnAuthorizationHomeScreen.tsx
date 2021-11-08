@@ -3,8 +3,8 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import { StackNavigationOptions } from '@react-navigation/stack';
 
 import { LightTheme } from '@constants/color';
-import KakaoLoginButton from '@screens/unauthorization/components/KakaoLoginButton';
-import NaverLoginButton from '@screens/unauthorization/components/NaverLoginButton';
+import KakaoLoginButton from '@screens/un-authorization/components/KakaoLoginButton';
+import NaverLoginButton from '@screens/un-authorization/components/NaverLoginButton';
 import SafeView from '@components/common/SafeView';
 
 export const UnAuthorizationHomeScreenOptions: StackNavigationOptions = {};
@@ -19,8 +19,7 @@ const UnAuthorizationHomeScreen: React.VFC = () => {
         <Image
           style={styles.image}
           source={require('./images/people.png')}
-          width={445}
-          height={334}
+          height={360}
           resizeMode={'contain'}
         />
         <View style={styles.buttonContainer}>
@@ -54,9 +53,8 @@ const styles = StyleSheet.create({
     color: LightTheme.TEXT,
   },
   image: {
-    width: 455,
-    height: 334,
-    left: -42,
+    width: '100%',
+    height: 360,
   },
 });
 

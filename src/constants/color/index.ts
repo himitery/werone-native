@@ -4,6 +4,7 @@ export enum LightTheme {
   BACK_GROUND = '#FFFFFF',
   INPUT_BACK_GROUND = '#E0E0E0',
   GENERAL_BUTTON_BACK_GROUND = '#606261',
+  INACTIVE = '#656565',
 }
 
 export enum Colors {

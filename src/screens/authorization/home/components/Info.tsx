@@ -25,7 +25,7 @@ const Info: React.FC<DescriptionProps> = ({
       <View style={styles.imageView}>
         <Image
           style={styles.image}
-          source={require('../../../unauthorization/images/people.png')}
+          source={require('../images/people_minified.png')}
           resizeMode={'contain'}
         />
       </View>

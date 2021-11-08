@@ -10,7 +10,6 @@ import {
   View,
 } from 'react-native';
 import { StackNavigationOptions } from '@react-navigation/stack';
-import * as FileSystem from 'expo-file-system';
 import { useSetRecoilState } from 'recoil';
 
 import SafeView from '@components/common/SafeView';
@@ -77,14 +76,10 @@ const SignUpScreen: React.VFC = () => {
 
   const handleSignUp = useCallback(async () => {
     try {
-      const idCardImage = await FileSystem.readAsStringAsync(image, {
-        encoding: 'base64',
-      });
-
       const { token } = await signUpApi({
         name,
         email,
-        idCardImage,
+        idCardImage: image,
         platformId,
         platformType,
         profileImageUrl,

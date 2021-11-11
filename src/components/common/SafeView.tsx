@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
   Platform,
   SafeAreaView,
@@ -15,26 +15,18 @@ interface SafeViewProps {
 }
 
 const SafeView: React.FC<SafeViewProps> = ({ children, style }) => {
-  const statusStyle = useMemo<StyleProp<ViewStyle>>(
-    () => ({
-      paddingTop: Platform.select({
-        android: StatusBar.currentHeight,
-        ios: 0,
-      }),
-    }),
-    [StatusBar]
-  );
-
   return (
-    <SafeAreaView style={[styles.container, statusStyle, style]}>
-      {children}
-    </SafeAreaView>
+    <SafeAreaView style={[styles.container, style]}>{children}</SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: Platform.select({
+      android: StatusBar.currentHeight,
+      ios: 0,
+    }),
     backgroundColor: LightTheme.BACK_GROUND,
   },
 });

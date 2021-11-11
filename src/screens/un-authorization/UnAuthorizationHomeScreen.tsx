@@ -3,9 +3,9 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import { StackNavigationOptions } from '@react-navigation/stack';
 
 import { LightTheme } from '@constants/color';
+import SafeView from '@components/common/SafeView';
 import KakaoLoginButton from '@screens/un-authorization/components/KakaoLoginButton';
 import NaverLoginButton from '@screens/un-authorization/components/NaverLoginButton';
-import SafeView from '@components/common/SafeView';
 
 export const UnAuthorizationHomeScreenOptions: StackNavigationOptions = {};
 

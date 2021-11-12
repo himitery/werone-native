@@ -8,16 +8,9 @@ const meApi = () => {
 };
 
 export const meApiFetcher = async (url = '/user/me'): Promise<User> => {
-  return await instance
-    .get(url)
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      console.group(`[Me Api Fetcher Error]`);
-      console.log(err);
-      console.groupEnd();
-    });
+  return await instance.get(url).then((res) => {
+    return res.data;
+  });
 };
 
 export default meApi;

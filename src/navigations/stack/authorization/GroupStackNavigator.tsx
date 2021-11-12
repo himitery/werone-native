@@ -12,6 +12,9 @@ import GroupListScreen, {
 } from '@screens/authorization/group/GroupListScreen';
 import { LightTheme } from '@constants/color';
 import { Platform } from 'react-native';
+import GroupDetailScreen, {
+  GroupDetailScreenOptions,
+} from '@screens/authorization/group/GroupDetailScreen';
 
 export const GroupStackNavigatorOptions: MaterialBottomTabNavigationOptions = {
   title: '그룹 목록',
@@ -22,6 +25,7 @@ export const GroupStackNavigatorOptions: MaterialBottomTabNavigationOptions = {
 
 export type GroupStackParamList = {
   [GroupNavigations.GroupList]: undefined;
+  [GroupNavigations.GroupDetail]: { groupId: number };
 };
 
 const Stack = createStackNavigator<GroupStackParamList>();
@@ -36,6 +40,11 @@ const GroupStackNavigator: React.VFC = () => {
         name={GroupNavigations.GroupList}
         component={GroupListScreen}
         options={GroupListScreenOptions}
+      />
+      <Stack.Screen
+        name={GroupNavigations.GroupDetail}
+        component={GroupDetailScreen}
+        options={GroupDetailScreenOptions}
       />
     </Stack.Navigator>
   );

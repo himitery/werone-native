@@ -1,31 +1,16 @@
 import React from 'react';
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { Colors, LightTheme } from '@constants/color';
-import CustomCard from '@components/common/CustomCard';
 
-const Alarm = () => {
-  const data = [
-    {
-      id: 1,
-      category: '개인톡',
-      text: '내용',
-      date: '2021-11-09',
-    },
-    {
-      id: 2,
-      category: '개인톡',
-      text: '내용',
-      date: '2021-11-09',
-    },
-    {
-      id: 3,
-      category: '개인톡',
-      text: '내용',
-      date: '2021-11-09',
-    },
-  ];
+interface AlarmItemProps {
+  id: number;
+  category: string;
+  text: string;
+  date: string;
+}
 
-  const Item = ({ id, category, text, date }) => (
+const AlarmItem: React.FC<AlarmItemProps> = ({ category, text, date }) => {
+  return (
     <View style={styles.alarm}>
       <Image
         style={styles.alarmImage}
@@ -40,33 +25,12 @@ const Alarm = () => {
       </View>
     </View>
   );
-
-  const renderItem = ({ item }) => (
-    <Item
-      id={item.id}
-      category={item.category}
-      text={item.text}
-      date={item.date}
-    />
-  );
-
-  return (
-    <CustomCard style={styles.alarm}>
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        scrollEnabled={false}
-      />
-    </CustomCard>
-  );
 };
 
 const styles = StyleSheet.create({
   alarm: {
     flexDirection: 'row',
-    marginTop: 10,
-    marginBottom: 10,
+    marginVertical: 10,
   },
   alarmImage: {
     width: 70,
@@ -93,4 +57,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Alarm;
+export default AlarmItem;

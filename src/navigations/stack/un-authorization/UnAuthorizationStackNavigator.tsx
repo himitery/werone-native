@@ -4,6 +4,7 @@ import {
   StackNavigationOptions,
 } from '@react-navigation/stack';
 
+import PlatformType from '@api/domain/platformType';
 import { UnAuthorizationNavigations } from '@constants/navigations';
 import UnAuthorizationHomeScreen, {
   UnAuthorizationHomeScreenOptions,
@@ -14,7 +15,9 @@ import SignUpScreen, {
 import KakaoLoginScreen, {
   KakaoLoginScreenOptions,
 } from '@screens/un-authorization/KakaoLoginScreen';
-import PlatformType from '@api/domain/platformType';
+import ApprovalWaitingScreen, {
+  ApprovalWaitingScreenOptions,
+} from '@screens/un-authorization/ApprovalWaitingScreen';
 
 export type UnAuthorizationStackParamList = {
   [UnAuthorizationNavigations.Home]: undefined;
@@ -26,6 +29,7 @@ export type UnAuthorizationStackParamList = {
   };
   [UnAuthorizationNavigations.Kakao]: undefined;
   [UnAuthorizationNavigations.Naver]: undefined;
+  [UnAuthorizationNavigations.ApprovalWaiting]: undefined;
 };
 
 const Stack = createStackNavigator<UnAuthorizationStackParamList>();
@@ -50,6 +54,11 @@ const UnAuthorizationStackNavigator: React.VFC = () => {
         name={UnAuthorizationNavigations.Kakao}
         component={KakaoLoginScreen}
         options={KakaoLoginScreenOptions}
+      />
+      <Stack.Screen
+        name={UnAuthorizationNavigations.ApprovalWaiting}
+        component={ApprovalWaitingScreen}
+        options={ApprovalWaitingScreenOptions}
       />
     </Stack.Navigator>
   );

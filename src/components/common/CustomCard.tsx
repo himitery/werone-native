@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   card: {
     borderWidth: 1,
-    borderColor: LightTheme.BORDER,
+    borderColor: LightTheme.BORDER_LINE,
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,

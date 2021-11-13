@@ -3,9 +3,10 @@ export enum LightTheme {
   TEXT = '#0B0B0B',
   BACK_GROUND = '#FFFFFF',
   INPUT_BACK_GROUND = '#E0E0E0',
+  BOX_BACK_GROUND = '#EBEBEB',
   GENERAL_BUTTON_BACK_GROUND = '#606261',
   INACTIVE = '#656565',
-  BORDER = '#DBDBDB',
+  BORDER_LINE = '#DCDCDC',
 }
 
 export enum Colors {

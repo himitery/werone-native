@@ -17,6 +17,7 @@ interface CustomTextInputProps {
   editable?: boolean;
   setValue: React.Dispatch<React.SetStateAction<string>>;
   style?: StyleProp<ViewStyle>;
+  inputStyle?: StyleProp<ViewStyle>;
   props?: TextInputProps;
 }
 
@@ -27,6 +28,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
   editable = true,
   setValue,
   style,
+  inputStyle,
   props,
 }) => {
   const handleChangeText = useCallback((text: string) => {
@@ -37,7 +39,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
     <View style={[styles.container, style]}>
       <Text style={styles.title}>{title}</Text>
       <TextInput
-        style={styles.textInput}
+        style={[styles.textInput, inputStyle]}
         value={value}
         onChangeText={handleChangeText}
         placeholder={placeholder}
@@ -57,7 +59,6 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: '700',
     fontSize: 18,
-    lineHeight: 18,
     color: LightTheme.TEXT,
   },
   textInput: {

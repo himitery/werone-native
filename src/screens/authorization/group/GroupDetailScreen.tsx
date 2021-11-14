@@ -18,8 +18,12 @@ import SafeView from '@components/common/SafeView';
 import MessageBox from '@components/common/MessageBox';
 import InfoBox from '@screens/authorization/group/components/InfoBox';
 import getKoreanWeek from '@utils/getKoreanWeek';
-import { LightTheme } from '@constants/color';
+import { Colors, LightTheme } from '@constants/color';
 import GroupDescriptionBox from '@screens/authorization/group/components/GroupDescriptionBox';
+import _ from 'lodash';
+import CustomButton from '@components/common/CustomButton';
+import Conditional from '@hocs/Conditional';
+import participantGroupNewApi from '@api/group/participant/participant-group-new.api';
 
 type routeProp = RouteProp<GroupStackParamList, GroupNavigations.GroupDetail>;
 
@@ -43,14 +47,18 @@ const GroupDetailScreen: React.VFC = () => {
 
   const { data } = getGroupInfoApi({ groupId });
 
-  const messages = useMemo<string[]>(() => [], [data]);
+  const messages = useMemo<string[]>(
+    () =>
+      _(data?.notices)
+        .orderBy((item) => item.id, ['desc'])
+        .map((item) => item.title)
+        .value(),
+    [data?.notices]
+  );
 
   useFocusEffect(
     useCallback(() => {
       setBottomBarVisible(false);
-      return () => {
-        setBottomBarVisible(true);
-      };
     }, [setBottomBarVisible])
   );
 
@@ -66,6 +74,11 @@ const GroupDetailScreen: React.VFC = () => {
     []
   );
 
+  const handleOnPress = useCallback(async () => {
+    if (!data?.id) return;
+    await participantGroupNewApi({ groupId: data?.id });
+  }, [data?.id]);
+
   return (
     <SafeView style={styles.safeContainer}>
       <ScrollView bounces={false}>
@@ -80,10 +93,20 @@ const GroupDetailScreen: React.VFC = () => {
           <InfoBox info={'위치'} description={data?.place} />
           <InfoBox info={'요일'} description={getKoreanWeek(data?.dayOfWeek)} />
         </View>
+
         <View style={[styles.container, styles.bottomContainer]}>
           <GroupDescriptionBox description={data?.description} />
         </View>
       </ScrollView>
+      <Conditional condition={!data?.isParticipant}>
+        <View style={styles.buttonContainer}>
+          <CustomButton
+            text={'그룹 참가'}
+            onPress={handleOnPress}
+            textStyle={styles.buttonText}
+          />
+        </View>
+      </Conditional>
     </SafeView>
   );
 };
@@ -105,6 +128,14 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     paddingVertical: 12,
+  },
+  buttonContainer: {
+    bottom: 0,
+    width: '100%',
+    paddingHorizontal: 12,
+  },
+  buttonText: {
+    color: Colors.WHITE,
   },
 });
 

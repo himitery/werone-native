@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { LightTheme } from '@constants/color';
-import GroupListItemMessage from '@screens/authorization/group/components/GroupListItemMessage';
+import GroupListItemMessage from '@screens/authorization/group/components/list/GroupListItemMessage';
 import { useNavigation } from '@react-navigation/native';
 import { GroupStackParamList } from '@navigations/stack/authorization/GroupStackNavigator';
 import { GroupNavigations } from '@constants/navigations';
@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
   image: {
     width: 44,
     height: 44,
+    borderRadius: 6,
     marginRight: 10,
   },
   name: {

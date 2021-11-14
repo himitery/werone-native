@@ -1,4 +1,5 @@
 import Week from '@api/domain/week';
+import Notice from '@api/domain/notice';
 
 interface Group {
   id: number;
@@ -7,10 +8,13 @@ interface Group {
   groupImageUrl: string;
   category: string;
   description: string;
+  notices: Notice[];
   dayOfWeek: Week;
   time: string;
   place: string;
   joinCondition: string;
+  isParticipant: boolean;
+  numParticipants: number;
 }
 
 export default Group;

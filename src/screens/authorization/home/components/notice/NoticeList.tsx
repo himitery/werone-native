@@ -5,6 +5,8 @@ import Notice from '@api/domain/notice';
 import NoticeItem from '@screens/authorization/home/components/notice/NoticeItem';
 
 const NoticeList = () => {
+  // const { data } = noticeMajorApi();
+
   const notices = useMemo<Notice[]>(
     () => [
       {

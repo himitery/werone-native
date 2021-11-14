@@ -1,31 +1,24 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { LightTheme } from '@constants/color';
+import meApi from '@api/user/me.api';
 
-interface DescriptionProps {
-  schoolName: string;
-  userName: string;
-  admissionYear: string;
-}
+const UserInfo: React.VFC = () => {
+  const { data } = meApi();
 
-const Info: React.FC<DescriptionProps> = ({
-  schoolName,
-  userName,
-  admissionYear,
-}) => {
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.title}>
-          {`${schoolName}\n`}
-          <Text style={styles.admissionYear}>{`${admissionYear}학번 `} </Text>
-          {`${userName}님\n안녕하세요 :)`}
+          {`단국대학교\n`}
+          <Text style={styles.admissionYear}>{`${data?.birth}학번`}</Text>
+          {` ${data?.name}님\n안녕하세요 :)`}
         </Text>
       </View>
       <View style={styles.imageView}>
         <Image
           style={styles.image}
-          source={require('../images/people_minified.png')}
+          source={require('../../images/people_minified.png')}
           resizeMode={'contain'}
         />
       </View>
@@ -60,4 +53,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Info;
+export default UserInfo;

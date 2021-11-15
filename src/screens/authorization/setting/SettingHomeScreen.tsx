@@ -23,10 +23,10 @@ const SettingHomeScreen: React.VFC = () => {
         />
         <View style={styles.userInfoText}>
           <Text style={styles.schoolName}>단국대학교</Text>
-          <Text>
+          <View style={styles.nameContainer}>
             <Text style={styles.name}>{data?.name} </Text>
             <Text>{data?.birth}</Text>
-          </Text>
+          </View>
           <Text style={styles.studentId}>{`${data?.studentId}`}</Text>
           <Text style={styles.entranceYear}>{`${data?.entranceYear}학번`}</Text>
         </View>
@@ -43,19 +43,25 @@ const styles = StyleSheet.create({
   userInfo: {
     marginHorizontal: 30,
     flexDirection: 'row',
-    paddingBottom: 30,
+    paddingVertical: 20,
     borderBottomColor: Colors.LIGHT_GRAY,
     borderBottomWidth: 1,
+    alignItems: 'center',
   },
   userInfoText: {
-    flexDirection: 'column',
+    height: 100,
     marginHorizontal: 20,
     marginVertical: 15,
+    justifyContent: 'space-between',
   },
   schoolName: {
     color: LightTheme.MAIN,
     fontSize: 18,
     marginBottom: 5,
+  },
+  nameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   name: {
     fontWeight: 'bold',
@@ -65,7 +71,6 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 100,
-    marginTop: 20,
   },
   studentId: {
     fontSize: 16,

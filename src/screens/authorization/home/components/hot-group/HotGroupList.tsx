@@ -8,21 +8,23 @@ const HotGroupList = () => {
   const hotGroups = useMemo<HotGroup[]>(
     () => [
       {
-        id: 1,
-        title: '도서관 스터디 ..',
-        groupImageUrl: 'http://img.khan.co.kr/newsmaker/1377/1377_58.jpg',
+        id: 11,
+        title: '점심 학식 그룹',
+        groupImageUrl:
+          'https://mblogthumb-phinf.pstatic.net/MjAxOTA2MjJfMTgy/MDAxNTYxMjE1MDYwODQ3.BB348qXuO-vypALYl0FVCVZIzygtZB8-PyqWnVLE73Qg.0epO2_ugZ2Z26g5yVzXBvTaXskmjGbcncjNL_AwJhRYg.JPEG.gate2016/8C9A9B88-305A-4BE8-940A-5AEB6A58ABF3.jpeg?type=w800',
         memberCount: 3,
       },
       {
-        id: 2,
-        title: '도서관 스터디 ..',
-        groupImageUrl: 'http://img.khan.co.kr/newsmaker/1377/1377_58.jpg',
+        id: 6,
+        title: '단국대 대운동장 러닝 그룹',
+        groupImageUrl:
+          'http://www.dankook.ac.kr/html_repositories/old/news/notice_img/notice_071019_9.jpg',
         memberCount: 5,
       },
       {
-        id: 3,
-        title: '도서관 스터디 ..',
-        groupImageUrl: 'http://img.khan.co.kr/newsmaker/1377/1377_58.jpg',
+        id: 1,
+        title: '토익 900점 목표 그룹',
+        groupImageUrl: 'https://vanvo.co.kr/upload/Repimg/210308004.jpg',
         memberCount: 6,
       },
     ],
@@ -62,7 +64,6 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 10,
     marginBottom: 30,
-    flex: 1,
   },
   card: {
     height: 140,

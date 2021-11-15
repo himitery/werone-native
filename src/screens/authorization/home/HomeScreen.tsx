@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { StackNavigationOptions } from '@react-navigation/stack';
 
@@ -7,19 +7,27 @@ import UserInfo from '@screens/authorization/home/components/info/UserInfo';
 import HotGroupList from '@screens/authorization/home/components/hot-group/HotGroupList';
 import AlarmList from '@screens/authorization/home/components/alarm/AlarmList';
 import NoticeList from '@screens/authorization/home/components/notice/NoticeList';
-import meApi from '@api/user/me.api';
+import { useSetRecoilState } from 'recoil';
+import { bottomBarVisibleStore } from '@stores/recoil/bottom-bar-visible.store';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const HomeScreenOptions: StackNavigationOptions = {
   headerShown: false,
 };
 
 const HomeScreen: React.VFC = () => {
-  const { data } = meApi();
+  const setBottomBarVisible = useSetRecoilState<boolean>(bottomBarVisibleStore);
+
+  useFocusEffect(
+    useCallback(() => {
+      setBottomBarVisible(true);
+    }, [setBottomBarVisible])
+  );
 
   return (
     <SafeView>
       <ScrollView style={styles.container}>
-        <UserInfo admissionYear={data?.name} name={data?.name} />
+        <UserInfo />
         <AlarmList />
         <NoticeList />
         <HotGroupList />

@@ -24,6 +24,7 @@ interface GroupListItemProps {
   imageUrl: string;
   name: string;
   message: string[];
+  major?: { location: string; tel: string; homepage: string };
 }
 
 const GroupListItem: React.FC<GroupListItemProps> = ({
@@ -54,7 +55,7 @@ const GroupListItem: React.FC<GroupListItemProps> = ({
             source={{ uri: imageUrl }}
             width={44}
             height={44}
-            resizeMode={'cover'}
+            resizeMode={'contain'}
           />
           <Text style={styles.name}>{name}</Text>
         </View>

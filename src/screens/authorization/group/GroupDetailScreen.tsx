@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Alert, Image, ScrollView, StyleSheet, View } from 'react-native';
 import { StackNavigationOptions } from '@react-navigation/stack';
 import {
   NavigationProp,
@@ -22,7 +22,6 @@ import { Colors, LightTheme } from '@constants/color';
 import GroupDescriptionBox from '@screens/authorization/group/components/GroupDescriptionBox';
 import _ from 'lodash';
 import CustomButton from '@components/common/CustomButton';
-import Conditional from '@hocs/Conditional';
 import participantGroupNewApi from '@api/group/participant/participant-group-new.api';
 
 type routeProp = RouteProp<GroupStackParamList, GroupNavigations.GroupDetail>;
@@ -38,20 +37,25 @@ export const GroupDetailScreenOptions: StackNavigationOptions = {
 };
 
 const GroupDetailScreen: React.VFC = () => {
-  const {
-    params: { groupId },
-  } = useRoute<routeProp>();
+  const { params } = useRoute<routeProp>();
   const navigation = useNavigation<navigationProp>();
 
   const setBottomBarVisible = useSetRecoilState<boolean>(bottomBarVisibleStore);
 
-  const { data } = getGroupInfoApi({ groupId });
+  const [buttonText, setButtonText] = useState<string>('그룹 참가');
 
-  const messages = useMemo<string[]>(
+  const { data } = getGroupInfoApi({
+    groupId: params?.groupId,
+  });
+
+  const messages = useMemo<{ title: string; content: string }[]>(
     () =>
       _(data?.notices)
         .orderBy((item) => item.id, ['desc'])
-        .map((item) => item.title)
+        .map((item) => ({
+          title: item.title,
+          content: item.content,
+        }))
         .value(),
     [data?.notices]
   );
@@ -69,15 +73,25 @@ const GroupDetailScreen: React.VFC = () => {
     });
   }, [data]);
 
+  useEffect(() => {
+    setButtonText(data?.isParticipant ? '채팅 참가' : '그룹 참가');
+  }, [data, setButtonText]);
+
   const renderItem = useCallback(
-    (item, index) => <MessageBox key={index} message={item} />,
+    (item, index) => (
+      <MessageBox key={index} title={item.title} content={item.content} />
+    ),
     []
   );
 
   const handleOnPress = useCallback(async () => {
+    if (data?.isParticipant) {
+      Alert.alert('위아원', '서비스 준비중입니다.');
+      return;
+    }
     if (!data?.id) return;
     await participantGroupNewApi({ groupId: data?.id });
-  }, [data?.id]);
+  }, [data?.id, data?.isParticipant]);
 
   return (
     <SafeView style={styles.safeContainer}>
@@ -88,6 +102,11 @@ const GroupDetailScreen: React.VFC = () => {
           height={180}
           resizeMode={'cover'}
         />
+
+        <View>
+          <InfoBox info={'위치'} description={data?.place} />
+        </View>
+
         <View style={[styles.container, styles.topContainer]}>
           {messages.map(renderItem)}
           <InfoBox info={'위치'} description={data?.place} />
@@ -98,15 +117,13 @@ const GroupDetailScreen: React.VFC = () => {
           <GroupDescriptionBox description={data?.description} />
         </View>
       </ScrollView>
-      <Conditional condition={!data?.isParticipant}>
-        <View style={styles.buttonContainer}>
-          <CustomButton
-            text={'그룹 참가'}
-            onPress={handleOnPress}
-            textStyle={styles.buttonText}
-          />
-        </View>
-      </Conditional>
+      <View style={styles.buttonContainer}>
+        <CustomButton
+          text={buttonText}
+          onPress={handleOnPress}
+          textStyle={styles.buttonText}
+        />
+      </View>
     </SafeView>
   );
 };

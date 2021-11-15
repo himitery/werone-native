@@ -1,16 +1,41 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { LightTheme } from '@constants/color';
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { GroupStackParamList } from '@navigations/stack/authorization/GroupStackNavigator';
+import { GroupNavigations, MainNavigations } from '@constants/navigations';
+
+type navigationProp = StackNavigationProp<
+  GroupStackParamList,
+  GroupNavigations.GroupNotice
+>;
 
 interface MessageBoxProps {
-  message: string;
+  title: string;
+  content: string;
 }
 
-const MessageBox: React.FC<MessageBoxProps> = ({ message }) => {
+const MessageBox: React.FC<MessageBoxProps> = ({ title, content }) => {
+  const navigation = useNavigation<navigationProp>();
+
+  const handleOnPress = useCallback(() => {
+    navigation.dispatch({
+      ...CommonActions.navigate(MainNavigations.MainGroup, {
+        initial: false,
+        screen: GroupNavigations.GroupNotice,
+        params: {
+          title,
+          content,
+        },
+      }),
+    });
+  }, [navigation, title, content]);
+
   return (
-    <TouchableOpacity disabled={true}>
+    <TouchableOpacity onPress={handleOnPress}>
       <View style={styles.container}>
-        <Text style={styles.message}>{`📌 ${message}`}</Text>
+        <Text style={styles.message}>{`📌 ${title}`}</Text>
       </View>
     </TouchableOpacity>
   );

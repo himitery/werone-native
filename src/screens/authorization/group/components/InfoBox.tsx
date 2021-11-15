@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   info: {
-    width: 34,
+    width: 80,
     fontWeight: '700',
     fontSize: 14,
     color: LightTheme.TEXT,

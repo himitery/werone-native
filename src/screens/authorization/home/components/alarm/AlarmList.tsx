@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import CustomCard from '@components/common/CustomCard';
 import AlarmItem from '@screens/authorization/home/components/alarm/AlarmItem';
 import Alarm from '@api/domain/alarm';
@@ -34,8 +34,9 @@ const AlarmList = () => {
   );
 
   const renderItem = useCallback(
-    ({ id, category, imageUrl, text, date }) => (
+    ({ id, category, imageUrl, text, date }, index) => (
       <AlarmItem
+        key={index}
         id={id}
         category={category}
         imageUrl={imageUrl}
@@ -47,7 +48,9 @@ const AlarmList = () => {
   );
 
   return (
-    <CustomCard style={styles.container}>{alarms.map(renderItem)}</CustomCard>
+    <View style={styles.container}>
+      <CustomCard style={styles.container}>{alarms.map(renderItem)}</CustomCard>
+    </View>
   );
 };
 

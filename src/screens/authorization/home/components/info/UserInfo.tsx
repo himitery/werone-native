@@ -1,18 +1,20 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { LightTheme } from '@constants/color';
-import meApi from '@api/user/me.api';
 
-const UserInfo: React.VFC = () => {
-  const { data } = meApi();
+interface UserInfoProps {
+  admissionYear: string;
+  name: string;
+}
 
+const UserInfo: React.FC<UserInfoProps> = ({ admissionYear, name }) => {
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.title}>
           {`단국대학교\n`}
-          <Text style={styles.admissionYear}>{`${data?.birth}학번`}</Text>
-          {` ${data?.name}님\n안녕하세요 :)`}
+          <Text style={styles.admissionYear}>{`${admissionYear}학번`}</Text>
+          {` ${name}님\n안녕하세요 :)`}
         </Text>
       </View>
       <View style={styles.imageView}>

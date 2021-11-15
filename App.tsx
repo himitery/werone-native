@@ -9,6 +9,7 @@ import Main from '@/Main';
 import TokenRepository from '@stores/repositories/TokenRepository';
 import reissueApi from '@api/auth/reissue.api';
 import instance from '@config/axios';
+import dayjs from 'dayjs';
 
 const App: React.VFC = () => {
   LogBox.ignoreLogs(['Setting a timer for a long period of time']);
@@ -32,6 +33,16 @@ const App: React.VFC = () => {
         .toString()
         .split('\n')[0]
         .split('status code ')[1];
+
+      console.group(`\n${Array(42).fill('-', 0, 41).join('')}`);
+      console.log(`  API          : /api${key}`);
+      console.log(`  Status Code  : ${statusCode}`);
+      console.log(
+        `  Time         : ${dayjs(new Date()).format(`YYYY년 MM월 DD일 HH:mm`)}`
+      );
+      console.log(`${Array(42).fill('-', 0, 41).join('')}`);
+      console.groupEnd();
+
       if (statusCode !== 401) return;
 
       const existingToken = await TokenRepository.get();

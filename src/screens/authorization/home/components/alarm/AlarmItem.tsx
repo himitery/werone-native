@@ -5,17 +5,23 @@ import { Colors, LightTheme } from '@constants/color';
 interface AlarmItemProps {
   id: number;
   category: string;
+  imageUrl: string;
   text: string;
   date: string;
 }
 
-const AlarmItem: React.FC<AlarmItemProps> = ({ category, text, date }) => {
+const AlarmItem: React.FC<AlarmItemProps> = ({
+  category,
+  imageUrl,
+  text,
+  date,
+}) => {
   return (
     <View style={styles.alarm}>
       <Image
         style={styles.alarmImage}
         source={{
-          uri: 'https://avatars.githubusercontent.com/u/31758135?v=4',
+          uri: `${imageUrl}`,
         }}
       />
       <View style={styles.alarmContent}>

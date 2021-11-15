@@ -17,8 +17,9 @@ const NoticeItem: React.FC<NoticeItemProps> = ({ id, title }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
     flex: 1,
+    marginTop: 10,
+    padding: 0,
   },
 });
 

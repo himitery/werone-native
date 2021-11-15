@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   createMaterialBottomTabNavigator,
   MaterialBottomTabNavigationOptions,
@@ -15,7 +15,10 @@ import SettingStackNavigator, {
   SettingStackNavigatorOptions,
 } from '@navigations/stack/authorization/SettingStackNavigator';
 import { LightTheme } from '@constants/color';
-import { StyleSheet } from 'react-native';
+import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
+import { useRecoilValue } from 'recoil';
+
+import { bottomBarVisibleStore } from '@stores/recoil/bottom-bar-visible.store';
 
 export type MainBottomTabParamList = {
   [MainNavigations.MainGroup]: undefined;
@@ -26,11 +29,18 @@ export type MainBottomTabParamList = {
 const Tab = createMaterialBottomTabNavigator<MainBottomTabParamList>();
 
 const MainBottomTabNavigator: React.VFC = () => {
+  const bottomVisible = useRecoilValue<boolean>(bottomBarVisibleStore);
+
+  const barVisible = useMemo<StyleProp<ViewStyle>>(
+    () => ({ display: bottomVisible ? 'flex' : 'none' }),
+    [bottomVisible]
+  );
+
   return (
     <Tab.Navigator
       initialRouteName={MainNavigations.MainHome}
       screenOptions={screenOptions}
-      barStyle={styles.barStyle}
+      barStyle={[styles.barStyle, barVisible]}
       activeColor={LightTheme.MAIN}
       inactiveColor={LightTheme.INACTIVE}
       keyboardHidesNavigationBar={true}

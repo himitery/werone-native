@@ -14,6 +14,7 @@ export enum Colors {
   NAVER = '#03C75A',
   NAVER_TEXT = '#FFFFFF',
   WHITE = '#FFFFFF',
+  BLACK = '#000000',
   WARNNING = '#FF2626',
   GRAY = '#ADADAD',
   LIGHT_GRAY = '#DBDBDB',

@@ -9,7 +9,7 @@ interface GroupListItemMessageProps {
 const GroupListItemMessage: React.FC<GroupListItemMessageProps> = ({
   message,
 }) => {
-  return <Text style={styles.message}>{message}</Text>;
+  return <Text style={styles.message}>📌 {message}</Text>;
 };
 
 const styles = StyleSheet.create({

@@ -15,6 +15,7 @@ import CustomButton from '@components/common/CustomButton';
 import { Colors } from '@constants/color';
 import { GroupStackParamList } from '@navigations/stack/authorization/GroupStackNavigator';
 import { GroupNavigations } from '@constants/navigations';
+import MajorItem from '@screens/authorization/group/components/major/MajorItem';
 
 type navigationProp = StackNavigationProp<
   GroupStackParamList,
@@ -81,6 +82,7 @@ const GroupListScreen: React.VFC = () => {
   return (
     <SafeView style={styles.safeContainer}>
       <View style={styles.container}>
+        <MajorItem />
         <FlatList<Group>
           data={groupList}
           keyExtractor={keyExtractor}

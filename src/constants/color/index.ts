@@ -16,4 +16,6 @@ export enum Colors {
   WHITE = '#FFFFFF',
   BLACK = '#000000',
   WARNNING = '#FF2626',
+  GRAY = '#ADADAD',
+  LIGHT_GRAY = '#DBDBDB',
 }

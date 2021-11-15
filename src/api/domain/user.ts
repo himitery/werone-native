@@ -12,6 +12,8 @@ interface User {
   platformId: string;
   platformType: PlatformType;
   profileImageUrl: string;
+  entranceYear: number;
+  studentId: number;
 }
 
 export default User;

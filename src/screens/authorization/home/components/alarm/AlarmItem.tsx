@@ -1,6 +1,15 @@
-import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Colors, LightTheme } from '@constants/color';
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import { GroupNavigations, MainNavigations } from '@constants/navigations';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { MainBottomTabParamList } from '@navigations/tab/MainBottomStackNavigator';
+
+type navigationProp = StackNavigationProp<
+  MainBottomTabParamList,
+  MainNavigations.MainHome
+>;
 
 interface AlarmItemProps {
   id: number;
@@ -16,20 +25,28 @@ const AlarmItem: React.FC<AlarmItemProps> = ({
   text,
   date,
 }) => {
+  const navigation = useNavigation<navigationProp>();
+
+  const handleOnPress = useCallback(() => {
+    navigation.dispatch({
+      ...CommonActions.navigate(MainNavigations.MainGroup, {
+        initial: false,
+        screen: GroupNavigations.GroupList,
+      }),
+    });
+  }, [navigation]);
+
   return (
-    <View style={styles.alarm}>
-      <Image
-        style={styles.alarmImage}
-        source={{
-          uri: `${imageUrl}`,
-        }}
-      />
-      <View style={styles.alarmContent}>
-        <Text style={styles.alarmCategory}>{category}</Text>
-        <Text style={styles.alarmTxt}>{text}</Text>
-        <Text style={styles.alarmDate}>{date}</Text>
+    <TouchableOpacity onPress={handleOnPress}>
+      <View style={styles.alarm}>
+        <Image style={styles.alarmImage} source={{ uri: imageUrl }} />
+        <View style={styles.alarmContent}>
+          <Text style={styles.alarmCategory}>{category}</Text>
+          <Text style={styles.alarmTxt}>{text}</Text>
+          <Text style={styles.alarmDate}>{date}</Text>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

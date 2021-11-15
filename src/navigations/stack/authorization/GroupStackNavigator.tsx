@@ -21,6 +21,12 @@ import GroupSearchScreen, {
 import GroupCreateScreen, {
   GroupCreateScreenOptions,
 } from '@screens/authorization/group/GroupCreateScreen';
+import GroupNoticeScreen, {
+  GroupNoticeScreenOptions,
+} from '@screens/authorization/group/GroupNoticeScreen';
+import MajorDetailScreen, {
+  MajorDetailScreenOptions,
+} from '@screens/authorization/group/components/major/MajorDetailScreen';
 
 export const GroupStackNavigatorOptions: MaterialBottomTabNavigationOptions = {
   title: '그룹 목록',
@@ -34,6 +40,8 @@ export type GroupStackParamList = {
   [GroupNavigations.GroupDetail]: { groupId: number };
   [GroupNavigations.GroupSearch]: undefined;
   [GroupNavigations.GroupCreate]: undefined;
+  [GroupNavigations.GroupNotice]: { title: string; content: string };
+  [GroupNavigations.GroupMajor]: undefined;
 };
 
 const Stack = createStackNavigator<GroupStackParamList>();
@@ -64,6 +72,16 @@ const GroupStackNavigator: React.VFC = () => {
         component={GroupCreateScreen}
         options={GroupCreateScreenOptions}
       />
+      <Stack.Screen
+        name={GroupNavigations.GroupNotice}
+        component={GroupNoticeScreen}
+        options={GroupNoticeScreenOptions}
+      />
+      <Stack.Screen
+        name={GroupNavigations.GroupMajor}
+        component={MajorDetailScreen}
+        options={MajorDetailScreenOptions}
+      />
     </Stack.Navigator>
   );
 };
@@ -80,6 +98,13 @@ const screenOptions: StackNavigationOptions = {
       android: 80,
       ios: 100,
     }),
+  },
+};
+
+const modelScreenOptions: StackNavigationOptions = {
+  presentation: 'modal',
+  headerStyle: {
+    height: 60,
   },
 };
 

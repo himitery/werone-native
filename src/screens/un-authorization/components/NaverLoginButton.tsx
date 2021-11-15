@@ -1,9 +1,18 @@
 import React, { useCallback } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Colors } from '@constants/color';
 
 const NaverLoginButton: React.VFC = () => {
-  const handleOnPress = useCallback(() => {}, []);
+  const handleOnPress = useCallback(() => {
+    Alert.alert('위아원', '서비스 준비중입니다.');
+  }, []);
 
   return (
     <TouchableOpacity

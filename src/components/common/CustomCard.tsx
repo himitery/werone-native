@@ -16,9 +16,7 @@ const CustomCard: React.FC<CustomCardProps> = ({ children, style }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  container: {},
   card: {
     borderWidth: 1,
     borderColor: LightTheme.BORDER_LINE,

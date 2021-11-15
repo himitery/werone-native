@@ -15,6 +15,8 @@ import CustomButton from '@components/common/CustomButton';
 import { Colors } from '@constants/color';
 import { GroupStackParamList } from '@navigations/stack/authorization/GroupStackNavigator';
 import { GroupNavigations } from '@constants/navigations';
+import { useSetRecoilState } from 'recoil';
+import { bottomBarVisibleStore } from '@stores/recoil/bottom-bar-visible.store';
 import MajorItem from '@screens/authorization/group/components/major/MajorItem';
 
 type navigationProp = StackNavigationProp<
@@ -29,6 +31,8 @@ export const GroupListScreenOptions: StackNavigationOptions = {
 const GroupListScreen: React.VFC = () => {
   const navigation = useNavigation<navigationProp>();
 
+  const setBottomBarVisible = useSetRecoilState<boolean>(bottomBarVisibleStore);
+
   const [groupList, setGroupList] = useState<Group[]>([]);
   const [page, setPage] = useState<number>(0);
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -37,8 +41,9 @@ const GroupListScreen: React.VFC = () => {
 
   useFocusEffect(
     useCallback(() => {
+      setBottomBarVisible(true);
       mutate();
-    }, [])
+    }, [setBottomBarVisible])
   );
 
   useEffect(() => {
@@ -68,6 +73,8 @@ const GroupListScreen: React.VFC = () => {
     []
   );
 
+  const listHeaderComponent = useCallback(() => <MajorItem />, []);
+
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     setPage((prev) => prev + 1);
@@ -82,11 +89,11 @@ const GroupListScreen: React.VFC = () => {
   return (
     <SafeView style={styles.safeContainer}>
       <View style={styles.container}>
-        <MajorItem />
         <FlatList<Group>
           data={groupList}
           keyExtractor={keyExtractor}
           renderItem={renderItem}
+          ListHeaderComponent={listHeaderComponent}
           refreshing={refreshing}
           onRefresh={onRefresh}
           showsVerticalScrollIndicator={false}

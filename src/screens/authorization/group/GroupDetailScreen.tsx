@@ -103,10 +103,6 @@ const GroupDetailScreen: React.VFC = () => {
           resizeMode={'cover'}
         />
 
-        <View>
-          <InfoBox info={'위치'} description={data?.place} />
-        </View>
-
         <View style={[styles.container, styles.topContainer]}>
           {messages.map(renderItem)}
           <InfoBox info={'위치'} description={data?.place} />

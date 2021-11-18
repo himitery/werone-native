@@ -1,0 +1,21 @@
+export enum LightTheme {
+  MAIN = '#F97E25',
+  TEXT = '#0B0B0B',
+  BACK_GROUND = '#FFFFFF',
+  INPUT_BACK_GROUND = '#E0E0E0',
+  BOX_BACK_GROUND = '#EBEBEB',
+  GENERAL_BUTTON_BACK_GROUND = '#606261',
+  INACTIVE = '#656565',
+  BORDER_LINE = '#DCDCDC',
+}
+
+export enum Colors {
+  KAKAO = '#FEE500',
+  NAVER = '#03C75A',
+  NAVER_TEXT = '#FFFFFF',
+  WHITE = '#FFFFFF',
+  BLACK = '#000000',
+  WARNNING = '#FF2626',
+  GRAY = '#ADADAD',
+  LIGHT_GRAY = '#DBDBDB',
+}
